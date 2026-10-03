@@ -54,6 +54,17 @@
     @apply flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4 rounded-xl bg-surface-low border border-hairline px-4 py-3;
     border-left: 3px solid rgba(var(--row-rgb), 0.7);
   }
+
+  /* Legal documents (/privacy/, /terms/): readable measure, quiet hierarchy */
+  .legal { @apply max-w-[68ch] text-[15px] sm:text-base leading-relaxed text-fg-muted; }
+  .legal > section { @apply pt-10 mt-10 border-t border-hairline first:mt-0 first:pt-0 first:border-t-0; scroll-margin-top: 5.5rem; }
+  .legal h2 { @apply text-display-md font-heading font-bold text-white mb-4; }
+  .legal h3 { @apply text-lg font-heading font-semibold text-fg mt-7 mb-2.5; }
+  .legal p + p { @apply mt-4; }
+  .legal ul { @apply mt-3 mb-4 space-y-2 pl-5 list-disc marker:text-hairline-strong; }
+  .legal li > strong, .legal p > strong { @apply text-fg font-semibold; }
+  .legal a { @apply text-focus-soft underline decoration-focus/40 underline-offset-[3px] hover:decoration-focus-soft; }
+  .legal code { @apply font-mono text-[0.9em] text-fg; }
 }
 
 /* Keyboard users can jump straight past the header */

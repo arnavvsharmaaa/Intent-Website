@@ -1,0 +1,198 @@
+---
+import Legal from '../layouts/Legal.astro';
+
+// Keep in step with /privacy/. No governing-law clause until a jurisdiction is
+// decided; no payment terms until a paid offering exists.
+const CONTACT = 'arnavsharma8079@gmail.com';
+
+const sections = [
+  { id: 'acceptance', label: 'Acceptance' },
+  { id: 'service', label: 'What Intent is' },
+  { id: 'eligibility', label: 'Eligibility' },
+  { id: 'accounts', label: 'Your account' },
+  { id: 'license', label: 'Using the app' },
+  { id: 'acceptable-use', label: 'Acceptable use' },
+  { id: 'your-data', label: 'Your content and data' },
+  { id: 'ip', label: 'Intellectual property' },
+  { id: 'third-party', label: 'Third-party services' },
+  { id: 'availability', label: 'Availability and changes' },
+  { id: 'disclaimers', label: 'Disclaimers' },
+  { id: 'liability', label: 'Limitation of liability' },
+  { id: 'termination', label: 'Termination' },
+  { id: 'changes', label: 'Changes to these terms' },
+  { id: 'contact', label: 'Contact' },
+];
+---
+
+<Legal
+  title="Terms of Service — Intent"
+  description="The terms for using Intent, the local-first focus and goal-planning app for Windows: accounts, acceptable use, your data, and what to expect while Intent is in active development."
+  heading="Terms of Service"
+  effective="2026-10-04"
+  sections={sections}
+>
+  <p slot="intro" class="lead mt-6">
+    These terms are an agreement between you and Arnav Sharma, the individual who operates Intent. Please read them
+    together with the <a class="text-focus-soft underline decoration-focus/40 underline-offset-[3px] hover:decoration-focus-soft" href="/privacy/">Privacy Policy</a>.
+  </p>
+
+  <section id="acceptance" aria-labelledby="acceptance-h">
+    <h2 id="acceptance-h">Acceptance</h2>
+    <p>
+      By downloading, installing or using the Intent app, signing in, or using this website, you agree to these Terms of
+      Service. If you do not agree, do not use Intent.
+    </p>
+  </section>
+
+  <section id="service" aria-labelledby="service-h">
+    <h2 id="service-h">What Intent is</h2>
+    <p>
+      Intent is a focus and goal-planning app for Windows. It helps you connect monthly goals to daily tasks, work on a
+      current task, run focus sessions, return after interruptions, and reflect on and review your progress. It is built on
+      one idea: getting distracted is expected; returning is the skill.
+    </p>
+    <p>
+      Intent is local-first: your productivity content is stored on your device. An online account, created with Google
+      sign-in, identifies you and your devices.
+    </p>
+    <p>
+      Intent does not currently charge for use. If paid features are introduced, any prices and payment terms will be
+      presented to you before you buy.
+    </p>
+  </section>
+
+  <section id="eligibility" aria-labelledby="eligibility-h">
+    <h2 id="eligibility-h">Eligibility</h2>
+    <p>
+      You must be at least 13 years old to use Intent. Intent is not directed to children under 13. Additional age or
+      consent requirements may apply where required by applicable law, and you may use Intent only if you meet them.
+    </p>
+  </section>
+
+  <section id="accounts" aria-labelledby="accounts-h">
+    <h2 id="accounts-h">Your account</h2>
+    <ul>
+      <li>You sign in with a Google account. You are responsible for keeping that Google account and your devices secure.</li>
+      <li>Your Intent account is for you personally. Do not share it or use someone else’s account.</li>
+      <li>Tell us promptly at <a href={`mailto:${CONTACT}`}>{CONTACT}</a> if you believe your account has been used without your permission.</li>
+    </ul>
+  </section>
+
+  <section id="license" aria-labelledby="license-h">
+    <h2 id="license-h">Using the app</h2>
+    <p>
+      Subject to these terms, we give you a personal, non-exclusive, non-transferable, revocable licence to install and use
+      the Intent app on Windows devices you own or control, for your own use.
+    </p>
+  </section>
+
+  <section id="acceptable-use" aria-labelledby="acceptable-use-h">
+    <h2 id="acceptable-use-h">Acceptable use</h2>
+    <p>You agree not to:</p>
+    <ul>
+      <li>use Intent in violation of any law, or to harm others;</li>
+      <li>attempt to access accounts, data or systems you are not authorised to access;</li>
+      <li>probe, scan or test the vulnerability of our servers, or bypass security, authentication or rate limits;</li>
+      <li>interfere with or overload the service, including through automated or excessive requests;</li>
+      <li>copy, modify, distribute, sell or lease the app or the service, except as the law expressly allows;</li>
+      <li>misrepresent your identity or your affiliation with anyone.</li>
+    </ul>
+  </section>
+
+  <section id="your-data" aria-labelledby="your-data-h">
+    <h2 id="your-data-h">Your content and data</h2>
+    <p>
+      The goals, tasks, reflections and other content you create in Intent are yours. We do not claim ownership of them.
+      Because they are stored on your device, you are responsible for keeping that device and its data safe, including
+      making your own backups. We cannot recover local content that is lost or deleted.
+    </p>
+    <p>
+      How we handle account information is described in the <a href="/privacy/">Privacy Policy</a>.
+    </p>
+  </section>
+
+  <section id="ip" aria-labelledby="ip-h">
+    <h2 id="ip-h">Intellectual property</h2>
+    <p>
+      The Intent app, this website, the Intent name and logo, and the Kero companion artwork are owned by the operator of
+      Intent or its licensors and are protected by intellectual property laws. These terms do not give you any rights in
+      them other than the licence to use the app described above.
+    </p>
+    <p>
+      If you send us feedback or suggestions, we may use them to improve Intent without any obligation to you.
+    </p>
+  </section>
+
+  <section id="third-party" aria-labelledby="third-party-h">
+    <h2 id="third-party-h">Third-party services</h2>
+    <p>
+      Intent relies on services provided by others, including Google sign-in. Your use of your Google account is governed
+      by Google’s own terms and privacy policy. We are not responsible for third-party services, and their availability may
+      affect your ability to sign in.
+    </p>
+  </section>
+
+  <section id="availability" aria-labelledby="availability-h">
+    <h2 id="availability-h">Availability and changes</h2>
+    <p>
+      Intent is in active development. Features may be added, changed or removed, and the service may sometimes be
+      unavailable, for example during maintenance or updates. We may change, suspend or discontinue all or part of the
+      service at any time. Because your content is stored locally, an outage of our servers may affect signing in but does
+      not by itself remove the content on your device.
+    </p>
+  </section>
+
+  <section id="disclaimers" aria-labelledby="disclaimers-h">
+    <h2 id="disclaimers-h">Disclaimers</h2>
+    <p>
+      To the extent permitted by law, Intent is provided “as is” and “as available”, without warranties of any kind, whether
+      express or implied, including warranties of merchantability, fitness for a particular purpose, and non-infringement. We
+      do not promise that Intent will be uninterrupted, error-free or free of data loss.
+    </p>
+    <p>
+      Intent is a productivity tool. It is not medical, psychological or professional advice, and it is not a substitute for
+      care from a qualified professional.
+    </p>
+  </section>
+
+  <section id="liability" aria-labelledby="liability-h">
+    <h2 id="liability-h">Limitation of liability</h2>
+    <p>
+      To the extent permitted by law, the operator of Intent will not be liable for any indirect, incidental, special,
+      consequential or punitive damages, or for any loss of data, profits, goodwill or productivity, arising from or related
+      to your use of, or inability to use, Intent.
+    </p>
+    <p>
+      Nothing in these terms limits liability that cannot be limited under applicable law.
+    </p>
+  </section>
+
+  <section id="termination" aria-labelledby="termination-h">
+    <h2 id="termination-h">Termination</h2>
+    <p>
+      You can stop using Intent at any time. You can sign out, uninstall the app, and ask us to delete your account by
+      emailing <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.
+    </p>
+    <p>
+      We may suspend or end your access if you break these terms, if we must do so to comply with the law, or to protect the
+      service or other users. Sections that by their nature should continue after termination, including those on
+      intellectual property, disclaimers and limitation of liability, will continue to apply.
+    </p>
+  </section>
+
+  <section id="changes" aria-labelledby="changes-h">
+    <h2 id="changes-h">Changes to these terms</h2>
+    <p>
+      We may update these terms as Intent changes. When we do, we will revise the effective date above. If a change is
+      significant, we will take reasonable steps to let you know, for example on this website or in the app, before it takes
+      effect. If you keep using Intent after changes take effect, you accept the updated terms.
+    </p>
+  </section>
+
+  <section id="contact" aria-labelledby="contact-h">
+    <h2 id="contact-h">Contact</h2>
+    <p>
+      Intent is operated by Arnav Sharma. Questions about these terms: <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.
+    </p>
+  </section>
+</Legal>

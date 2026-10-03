@@ -1,0 +1,56 @@
+---
+// Shared shell for the legal pages (/privacy/, /terms/): same header, footer,
+// type scale and colours as the rest of the site, set as a readable document.
+import BaseLayout from './Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  /** ISO date (YYYY-MM-DD) the document takes effect. */
+  effective: string;
+  sections: { id: string; label: string }[];
+}
+
+const { title, description, heading, effective, sections } = Astro.props;
+const effectiveLabel = new Date(`${effective}T00:00:00Z`).toLocaleDateString('en-US', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+  timeZone: 'UTC',
+});
+---
+
+<BaseLayout title={title} description={description}>
+  <SiteHeader />
+  <main id="main" class="bg-canvas">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-20 pb-20 md:pb-28">
+      <header class="max-w-3xl mb-10 md:mb-14">
+        <p class="eyebrow text-focus-soft mb-3">Legal</p>
+        <h1 class="text-display-lg font-heading font-extrabold text-white text-balance">{heading}</h1>
+        <p class="mt-4 text-sm font-mono text-fg-subtle">
+          Effective <time datetime={effective}>{effectiveLabel}</time>
+        </p>
+        <slot name="intro" />
+      </header>
+
+      <div class="lg:grid lg:grid-cols-12 lg:gap-12">
+        <nav class="hidden lg:block lg:col-span-3" aria-labelledby="legal-toc">
+          <div class="sticky top-24">
+            <p id="legal-toc" class="text-xs font-mono font-semibold text-fg tracking-wider uppercase mb-3">On this page</p>
+            <ol class="space-y-2 text-sm text-fg-muted">
+              {sections.map((s) => <li><a class="hover:text-focus-soft transition-colors" href={`#${s.id}`}>{s.label}</a></li>)}
+            </ol>
+          </div>
+        </nav>
+
+        <article class="legal lg:col-span-9">
+          <slot />
+        </article>
+      </div>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>
