@@ -1,0 +1,50 @@
+---
+import { SITE } from '../config/site';
+import Logo from './Logo.astro';
+
+const year = new Date().getFullYear();
+const explore = [
+  { href: '/#how-it-works', label: 'How Intent works' },
+  { href: '/#returning', label: 'Returning after distraction' },
+  { href: '/#planning', label: 'Monthly & daily goals' },
+  { href: '/#kero', label: 'Kero, the desktop companion' },
+  { href: '/#reflection', label: 'Reflection & reviews' },
+  { href: '/#download', label: 'Download for Windows' },
+];
+---
+
+<footer class="border-t border-hairline bg-canvas pt-14 pb-10 text-fg-muted">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 mb-12">
+      <div class="md:col-span-6 space-y-4">
+        <a href="/" class="press inline-flex items-center gap-2.5 rounded-lg" aria-label={`${SITE.name} home`}>
+          <Logo class="w-7 h-7" />
+          <span class="font-heading font-extrabold text-[15px] tracking-[0.08em] text-white" aria-hidden="true">INTENT</span>
+        </a>
+        <p class="text-[15px] leading-relaxed max-w-sm">
+          A focus and goal-planning app for Windows, built on one idea: getting distracted is expected. Returning is the skill.
+        </p>
+      </div>
+
+      <nav class="md:col-span-3" aria-labelledby="footer-explore">
+        <p id="footer-explore" class="text-xs font-mono font-semibold text-fg tracking-wider uppercase mb-3">Explore</p>
+        <ul class="space-y-2 text-sm">
+          {explore.map((l) => <li><a class="hover:text-focus-soft transition-colors" href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+
+      <div class="md:col-span-3">
+        <p class="text-xs font-mono font-semibold text-fg tracking-wider uppercase mb-3">The app</p>
+        <ul class="space-y-2 text-sm">
+          <li>Windows 10 (22H2+) and Windows 11</li>
+          <li>Local-first SQLite storage</li>
+          <li>Version {SITE.version}, in active development</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-hairline/60 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs font-mono text-fg-subtle">
+      <p>© {year} Intent. All rights reserved.</p>
+    </div>
+  </div>
+</footer>

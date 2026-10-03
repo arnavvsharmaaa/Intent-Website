@@ -1,0 +1,223 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    color-scheme: dark;
+    /* Anchored sections land below the sticky header instead of under it */
+    scroll-padding-top: 5.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+  }
+  body {
+    background-color: theme('colors.canvas');
+    color: theme('colors.fg');
+    font-family: theme('fontFamily.sans');
+    overflow-x: hidden;
+    font-optical-sizing: auto;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background-color: theme('colors.focus');
+    color: theme('colors.canvas');
+  }
+  /* Numbers that change (timers, stats) shouldn't jitter as digits swap */
+  .font-mono { font-variant-numeric: tabular-nums; }
+
+  :focus-visible {
+    outline: 2px solid theme('colors.focus-soft');
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+.pixelated { image-rendering: pixelated; }
+
+/* ─────────────────────────────────────────────────────────
+   Marketing type scale. Body copy stays comfortably readable
+   all the way down the page (min 15px, muted-not-subtle).
+   ───────────────────────────────────────────────────────── */
+@layer components {
+  .section { @apply py-20 md:py-28 lg:py-32 bg-canvas; }
+  .eyebrow { @apply text-xs sm:text-[13px] font-mono font-semibold uppercase tracking-[0.14em]; }
+  .lead { @apply text-base sm:text-lg text-fg-muted leading-relaxed text-pretty; }
+  .card-title { @apply text-lg md:text-xl font-heading font-bold text-white tracking-[-0.014em] mb-2.5; }
+  .card-body { @apply text-[15px] leading-relaxed text-fg-muted; }
+  .loop-card { @apply rounded-2xl bg-surface-low border border-hairline p-6 md:p-7; }
+  .loop-step { @apply text-xs font-mono font-bold tracking-[0.06em] uppercase mb-4; }
+  .num-badge { @apply w-9 h-9 rounded-lg bg-focus/10 border border-focus/25 inline-flex items-center justify-center text-focus-soft text-sm font-mono font-bold shrink-0; }
+  .icon-tile { @apply w-11 h-11 rounded-xl border flex items-center justify-center mb-5; }
+  .option-item {
+    @apply flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-0.5 sm:gap-4 rounded-xl bg-surface-low border border-hairline px-4 py-3;
+    border-left: 3px solid rgba(var(--row-rgb), 0.7);
+  }
+}
+
+/* Keyboard users can jump straight past the header */
+.skip-link {
+  position: absolute; left: 1rem; top: -4rem; z-index: 100;
+  padding: 0.6rem 1rem; border-radius: 0.6rem;
+  background: theme('colors.focus'); color: #0c0e14; font-weight: 600;
+  transition: top 160ms ease;
+}
+.skip-link:focus { top: 0.75rem; }
+
+.bg-grid-pattern {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 28px 28px;
+  /* fade the grid out toward the edges so it doesn't read as a hard texture */
+  -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 40%, transparent 100%);
+          mask-image: radial-gradient(ellipse 80% 70% at 50% 30%, #000 40%, transparent 100%);
+}
+
+/* ─────────────────────────────────────────────────────────
+   Material: translucent header chrome
+   Content scrolls underneath; the divider only appears once
+   content actually overlaps it (scroll edge effect).
+   ───────────────────────────────────────────────────────── */
+.chrome {
+  background: rgba(15, 17, 23, 0.62);
+  -webkit-backdrop-filter: blur(20px) saturate(170%);
+          backdrop-filter: blur(20px) saturate(170%);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0);
+  transition: box-shadow 240ms ease, background-color 240ms ease;
+}
+.chrome[data-scrolled='true'] {
+  background: rgba(15, 17, 23, 0.72);
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.06), 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Nav: specific active state so you always know where you are */
+.nav-link { position: relative; transition: color 160ms ease; }
+.nav-link[aria-current] { color: theme('colors.fg'); }
+.nav-indicator {
+  position: absolute;
+  left: 0; bottom: -0.55rem;
+  height: 2px; width: 0;
+  border-radius: 2px;
+  background: theme('colors.focus-soft');
+  opacity: 0;
+  transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1),
+              width 420ms cubic-bezier(0.22, 1, 0.36, 1),
+              opacity 200ms ease;
+  will-change: transform, width;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Response: feedback lives on press, and it's instant.
+   ───────────────────────────────────────────────────────── */
+.press {
+  transition: transform 160ms cubic-bezier(0.22, 1, 0.36, 1),
+              background-color 160ms ease, border-color 160ms ease,
+              color 160ms ease, box-shadow 200ms ease, filter 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation; /* kill the 300ms tap delay */
+}
+.press:active { transform: scale(0.97); transition-duration: 80ms; }
+.press:active:not(:disabled) { filter: brightness(0.94); }
+
+/* Cards that respond to hover lift by a hair — no bounce, no scale */
+.lift { transition: transform 300ms cubic-bezier(0.22, 1, 0.36, 1), border-color 200ms ease, background-color 200ms ease; }
+@media (hover: hover) {
+  .lift:hover { transform: translateY(-2px); }
+}
+
+/* ─────────────────────────────────────────────────────────
+   Reveal on scroll — only hides content when JS is present,
+   so nothing is ever lost if scripts fail.
+   ───────────────────────────────────────────────────────── */
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 700ms cubic-bezier(0.22, 1, 0.36, 1),
+              transform 800ms cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+.js [data-reveal].is-in { opacity: 1; transform: none; }
+
+/* Progress fills grow from their start edge when seen */
+.js [data-fill] {
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 1100ms cubic-bezier(0.22, 1, 0.36, 1) 200ms;
+}
+.js .is-in [data-fill], .js [data-fill].is-in { transform: scaleX(1); }
+
+/* ─────────────────────────────────────────────────────────
+   Kero sprite — crops one 32×32 frame out of the 8×3 sheet.
+   (Previously the whole sheet was squeezed into every slot.)
+   ───────────────────────────────────────────────────────── */
+.kero {
+  --kero-size: 32px;
+  --col: 0; --row: 0;
+  display: inline-block;
+  flex-shrink: 0;
+  width: var(--kero-size);
+  height: var(--kero-size);
+  background-image: url('/companion/sheet.png');
+  background-repeat: no-repeat;
+  background-size: calc(var(--kero-size) * 8) calc(var(--kero-size) * 3);
+  background-position: calc(var(--col) * var(--kero-size) * -1) calc(var(--row) * var(--kero-size) * -1);
+  image-rendering: pixelated;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Return Pad demo — state-driven colour, transitions are
+   colour/opacity only (non-gestural, so CSS is fine here).
+   ───────────────────────────────────────────────────────── */
+.pad { --accent: theme('colors.recovery-soft'); --accent-rgb: 251, 191, 36; transition: box-shadow 500ms ease, border-color 500ms ease; }
+.pad[data-state='focus'] { --accent: theme('colors.focus-soft'); --accent-rgb: 52, 211, 153; }
+.pad[data-state='distracted'] { --accent: theme('colors.focus-soft'); --accent-rgb: 52, 211, 153; }
+.pad[data-state='break']    { --accent: theme('colors.recovery-soft'); --accent-rgb: 251, 191, 36; }
+.pad {
+  border-color: rgba(var(--accent-rgb), 0.3);
+  box-shadow: 0 0 0 1px rgba(var(--accent-rgb), 0.12), 0 30px 70px -28px rgba(var(--accent-rgb), 0.28);
+}
+.pad .accent-text { color: var(--accent); transition: color 400ms ease; }
+.pad .accent-bg { background-color: var(--accent); transition: background-color 400ms ease, transform 600ms cubic-bezier(0.22, 1, 0.36, 1); }
+.pad-swap { transition: opacity 220ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1); }
+.pad-swap[data-leaving] { opacity: 0; transform: translateY(-4px); }
+
+/* Mobile menu sheet — anchored to its trigger (top-right), same path in and out */
+.menu-sheet {
+  transform-origin: top right;
+  transition: opacity 200ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 320ms;
+  opacity: 0; transform: scale(0.96) translateY(-6px); visibility: hidden;
+}
+.menu-sheet[data-open='true'] {
+  opacity: 1; transform: none; visibility: visible;
+  transition: opacity 200ms ease, transform 320ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s;
+}
+
+/* ─────────────────────────────────────────────────────────
+   Accessibility: three independent signals
+   ───────────────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  /* Keep comprehension (fades), drop vestibular motion (slides, lifts, scale) */
+  .js [data-reveal] { transform: none; transition: opacity 300ms ease; transition-delay: 0ms; }
+  .js [data-fill] { transform: none; transition: none; }
+  .lift:hover, .press:active { transform: none; }
+  .menu-sheet, .menu-sheet[data-open='true'] { transform: none; }
+  .nav-indicator { transition: opacity 200ms ease; }
+  .pad-swap[data-leaving] { transform: none; }
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .chrome, .chrome[data-scrolled='true'] {
+    background: theme('colors.canvas');
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+}
+
+@media (prefers-contrast: more) {
+  .chrome { background: theme('colors.canvas'); box-shadow: 0 1px 0 0 theme('colors.hairline-strong'); }
+  .border-hairline { border-color: theme('colors.hairline-strong'); }
+  .text-fg-subtle { color: theme('colors.fg-muted'); }
+}
+
+/* Plus Jakarta's heavy period/comma carry wide sidebearings that read as a
+   detached glyph at display sizes — pull them back optically. */
+.kern-punct { margin-left: -0.09em; }

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "kero",
+  "name": "Kero",
+  "version": "0.1.0",
+  "author": "Focus Companion",
+  "license": "Proprietary, all rights reserved. See LICENSE.txt.",
+  "frameSize": [32, 32],
+  "anchor": [16, 31],
+  "sheet": "sheet.png",
+  "clips": {
+    "idle": { "frames": [0, 22, 0, 22, 0, 1], "durationsMs": [1600, 1600, 1600, 1600, 1400, 140], "loop": "loop" },
+    "idle.look": { "frames": [2, 3], "durationsMs": [900, 900], "loop": "once" },
+    "focusing": { "frames": [4, 5], "durationsMs": [1200, 1200], "loop": "loop" },
+    "paused": { "frames": [6, 7], "durationsMs": [1600, 1600], "loop": "loop" },
+    "break": { "frames": [8, 9], "durationsMs": [1600, 1600], "loop": "loop" },
+    "distracted": { "frames": [10, 11], "durationsMs": [1500, 1500], "loop": "loop" },
+    "celebrate": { "frames": [13, 12, 13, 14], "durationsMs": [240, 360, 240, 400], "loop": "once" },
+    "day": { "frames": [15, 16], "durationsMs": [1600, 1600], "loop": "loop" },
+    "encourage": { "frames": [18, 17, 18, 17], "durationsMs": [240, 360, 240, 360], "loop": "once" },
+    "sleep": { "frames": [19, 20], "durationsMs": [1400, 1400], "loop": "loop" },
+    "held": { "frames": [21], "durationsMs": [1000], "loop": "loop" }
+  },
+  "states": {
+    "IDLE": { "clip": "idle", "variants": [{ "clip": "idle.look", "everyMs": [20000, 45000] }] },
+    "FOCUSING": { "clip": "focusing" },
+    "PAUSED": { "clip": "paused" },
+    "BREAK": { "clip": "break" },
+    "DISTRACTED": { "clip": "distracted" },
+    "TASK_COMPLETED": { "clip": "celebrate" },
+    "DAY_COMPLETED": { "clip": "day" },
+    "ENCOURAGEMENT": { "clip": "encourage" },
+    "SNOOZED": { "clip": "sleep" },
+    "HELD": { "clip": "held" }
+  },
+  "fallbacks": {
+    "HOVER": "IDLE"
+  }
+}

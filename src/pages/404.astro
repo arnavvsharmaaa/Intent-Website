@@ -1,0 +1,19 @@
+---
+import BaseLayout from '../layouts/Base.astro';
+import SiteHeader from '../components/SiteHeader.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+---
+
+<BaseLayout title="Page not found — Intent" description="This page doesn't exist. Head back to Intent, the focus and goal-planning app for Windows." noindex>
+  <SiteHeader />
+  <main id="main" class="section min-h-[60vh] flex items-center">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6 text-center">
+      <span class="kero" data-kero="paused" style="--kero-size:96px;--col:6" role="img" aria-label="Kero, paused"></span>
+      <p class="eyebrow text-recovery-soft mt-6 mb-3">404</p>
+      <h1 class="text-display-lg font-heading font-extrabold text-white text-balance">This page wandered off<span class="kern-punct">.</span></h1>
+      <p class="lead mt-5">It happens. What matters is finding your way back.</p>
+      <a href="/" class="press mt-8 inline-flex items-center justify-center px-6 py-3.5 rounded-lg bg-focus hover:bg-focus-soft text-[#0c0e14] font-semibold text-[15px]">Back to the homepage</a>
+    </div>
+  </main>
+  <SiteFooter />
+</BaseLayout>

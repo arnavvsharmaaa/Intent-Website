@@ -1,0 +1,9 @@
+Kero companion pack 0.1.0 (sheet.png, preview.png, manifest.json)
+
+Copyright (c) Focus Companion. All rights reserved.
+Proprietary artwork for use in the Focus Companion desktop app only.
+
+The base 32x32 frog and the sleeping pose come from the Focus Companion
+Stitch design "Desktop Companion Overlay & Nudge System (S17)". The other
+state frames are drawn from that base. The pixel source lives in
+desktop/companions-src/kero-art.ts.

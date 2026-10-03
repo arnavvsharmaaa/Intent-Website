@@ -1,0 +1,90 @@
+---
+import '@fontsource-variable/inter';
+import '@fontsource-variable/plus-jakarta-sans';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+// The two faces visible above the fold; preloading them avoids a late font swap on the hero.
+import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import { SITE } from '../config/site';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Override the social preview image (path relative to the site root). */
+  image?: string;
+  imageAlt?: string;
+  noindex?: boolean;
+  /** Schema.org objects, emitted as one JSON-LD graph. */
+  structuredData?: Record<string, unknown>[];
+}
+
+const {
+  title = SITE.title,
+  description = SITE.description,
+  image = SITE.ogImage,
+  imageAlt = SITE.ogImageAlt,
+  noindex = false,
+  structuredData = [],
+} = Astro.props;
+
+// Always resolve against the configured production origin (astro.config `site`),
+// never the request host, so localhost/preview URLs can't leak into metadata.
+const site = Astro.site ?? new URL(SITE.url);
+const canonical = new URL(Astro.url.pathname, site).href;
+const imageUrl = new URL(image, site).href;
+const jsonLd = structuredData.length
+  ? JSON.stringify({ '@context': 'https://schema.org', '@graph': structuredData }).replace(/</g, '\\u003c')
+  : null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={canonical} />}
+
+    <meta name="theme-color" content={SITE.themeColor} />
+    <meta name="color-scheme" content="dark" />
+    <!-- Mark JS as available before first paint so reveal styles never hide content without JS -->
+    <script is:inline>document.documentElement.classList.add('js')</script>
+
+    <link rel="preload" href={jakartaLatin} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={interLatin} as="font" type="font/woff2" crossorigin />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={SITE.locale} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={imageAlt} />
+
+    <!-- Twitter / X -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={imageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
+  </head>
+  <body class="bg-canvas text-fg antialiased">
+    <a href="#main" class="skip-link">Skip to content</a>
+    <slot />
+  </body>
+</html>

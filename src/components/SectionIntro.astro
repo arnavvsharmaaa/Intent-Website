@@ -1,0 +1,20 @@
+---
+// Centered eyebrow + H2 + lead paragraph used to open most homepage sections.
+interface Props {
+  eyebrow: string;
+  /** id for the H2, so the parent <section> can reference it with aria-labelledby. */
+  headingId: string;
+  accent?: 'focus' | 'recovery' | 'plan';
+}
+const { eyebrow, headingId, accent = 'focus' } = Astro.props;
+const accentClass = { focus: 'text-focus-soft', recovery: 'text-recovery-soft', plan: 'text-plan-soft' }[accent];
+---
+<div class="text-center max-w-3xl mx-auto mb-14 md:mb-16" data-reveal>
+  <p class:list={['eyebrow mb-3', accentClass]}>{eyebrow}</p>
+  <h2 id={headingId} class="text-display-lg font-heading font-extrabold text-white text-balance">
+    <slot name="title" />
+  </h2>
+  <p class="lead mt-5 mx-auto max-w-2xl">
+    <slot />
+  </p>
+</div>

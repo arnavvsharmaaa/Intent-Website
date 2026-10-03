@@ -1,0 +1,27 @@
+// Single source of truth for site-wide facts used in metadata, JSON-LD and copy.
+// Keep these truthful: they're published to search engines.
+
+export const SITE = {
+  name: 'Intent',
+  /** Production origin, no trailing slash. Mirrors `site` in astro.config.mjs. */
+  url: 'https://intentapp.app',
+  title: 'Intent — A Windows Focus App for Returning After Distraction',
+  description:
+    'A Windows focus app for students, developers and knowledge workers: link monthly goals to daily tasks, run focus sessions, and return calmly after distraction.',
+  tagline: 'Getting distracted is expected. Returning is the skill.',
+  locale: 'en_US',
+  themeColor: '#0F1117',
+  ogImage: '/og-image.png',
+  ogImageAlt:
+    'Intent: Your goals shouldn’t disappear when you get distracted. A focus and goal-planning app for Windows, with Kero the pixel frog companion.',
+  os: 'Windows 10, Windows 11',
+  version: '0.1',
+} as const;
+
+const env = (v: string | undefined) => (v && v.trim() ? v.trim() : null);
+
+/** Signed installer URL. `null` until a real release is published. */
+export const DOWNLOAD_URL = env(import.meta.env.PUBLIC_DOWNLOAD_URL);
+
+/** Reserved for future use; the marketing site must render without it. */
+export const API_BASE_URL = env(import.meta.env.PUBLIC_API_BASE_URL);
