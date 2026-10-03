@@ -123,8 +123,9 @@ const sections = [
       Intent requests only the basic sign-in permissions: <code>openid</code>, <code>email</code> and <code>profile</code>.
       From these we use your Google account identifier, email address, verification status and name, as listed above,
       only to sign you in and to recognise your account on each of your devices. Intent does not request access to your
-      Gmail, Google Drive, Calendar, contacts or any other Google data. We do not use information from Google for
-      advertising, and we do not sell it.
+      Gmail, Google Drive, Calendar, contacts or any other Google data. Intent does not request Google refresh tokens, and
+      the Google sign-in tokens returned during authentication are used for the sign-in flow and are not stored by Intent.
+      We do not use information from Google for advertising, and we do not sell it.
     </p>
     <p>
       You can remove Intent’s access at any time from your Google Account’s <a href="https://myaccount.google.com/permissions" rel="noopener">third-party access settings</a>.
