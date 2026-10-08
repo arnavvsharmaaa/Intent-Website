@@ -6,6 +6,7 @@ import sitemap from '@astrojs/sitemap';
 // are all built from this, never from the request host, so dev/preview hosts
 // can't leak into the output.
 export default defineConfig({
+  devToolbar: { enabled: false },
   site: 'https://intentapp.app',
   trailingSlash: 'ignore',
   build: { format: 'directory' },

@@ -1,267 +1,107 @@
 ---
 import Legal from '../layouts/Legal.astro';
 
-// Every statement here must match the shipped desktop app and production
-// backend. Update this page (and `effective`) before changing what is collected.
+// Processing facts are carried forward from the existing policy, not inferred from other apps.
 const CONTACT = 'arnavsharma8079@gmail.com';
-
 const sections = [
-  { id: 'who', label: 'Who operates Intent' },
-  { id: 'local', label: 'What stays on your device' },
-  { id: 'collect', label: 'What we collect' },
+  { id: 'local', label: 'Your local data' },
+  { id: 'collect', label: 'Information we receive' },
   { id: 'google', label: 'Google sign-in' },
-  { id: 'analytics', label: 'Product analytics' },
   { id: 'use', label: 'How we use information' },
-  { id: 'storage', label: 'Where information is stored' },
-  { id: 'security', label: 'Security' },
-  { id: 'services', label: 'Services we rely on' },
-  { id: 'cookies', label: 'Cookies and local storage' },
-  { id: 'retention', label: 'How long we keep information' },
-  { id: 'choices', label: 'Your choices and requests' },
+  { id: 'storage', label: 'Storage and service providers' },
+  { id: 'cookies', label: 'Cookies and analytics' },
+  { id: 'retention', label: 'How long we keep data' },
+  { id: 'choices', label: 'Your choices' },
   { id: 'children', label: 'Children' },
-  { id: 'changes', label: 'Changes to this policy' },
-  { id: 'contact', label: 'Contact' },
+  { id: 'contact', label: 'Contact and updates' },
 ];
 ---
 
-<Legal
-  title="Privacy Policy — Intent"
-  description="How Intent, the local-first focus app for Windows, handles your information: your tasks, goals and reflections stay on your device; only what Google sign-in needs reaches our servers."
-  heading="Privacy Policy"
-  effective="2026-10-04"
-  sections={sections}
->
-  <div slot="intro" class="mt-8 grid gap-4 sm:grid-cols-3">
-    <div class="loop-card">
-      <p class="card-title text-base md:text-base">Your work stays local</p>
-      <p class="card-body">Tasks, goals, sessions and reflections are stored on your device, not on our servers.</p>
-    </div>
-    <div class="loop-card">
-      <p class="card-title text-base md:text-base">Sign-in only</p>
-      <p class="card-body">Our servers receive the account and device details needed to sign you in, nothing more.</p>
-    </div>
-    <div class="loop-card">
-      <p class="card-title text-base md:text-base">No analytics today</p>
-      <p class="card-body">Intent does not currently send product analytics or usage telemetry.</p>
+<Legal title="Privacy Policy - Intent"
+  description="How Intent handles local task data, Google sign-in, device information and technical logs, plus storage, retention and your privacy choices."
+  heading="Privacy Policy" effective="2026-10-09" sections={sections}>
+  <div slot="intro">
+    <p id="who" class="lead">Intent is operated by Arnav Sharma. This policy covers the Windows app and this website.</p>
+    <div class="mt-6 grid gap-6 sm:grid-cols-3">
+      <div class="loop-card"><p class="card-title">Your work stays local</p><p class="card-body">Tasks, goals and reflections stay on your device.</p></div>
+      <div class="loop-card"><p class="card-title">Account and service data</p><p class="card-body">We receive sign-in details, device information and basic technical logs.</p></div>
+      <div class="loop-card"><p class="card-title">No advertising or analytics</p><p class="card-body">We do not sell your data or currently collect product analytics.</p></div>
     </div>
   </div>
 
-  <section id="who" aria-labelledby="who-h">
-    <h2 id="who-h">Who operates Intent</h2>
-    <p>
-      Intent is a focus and goal-planning app for Windows. It is operated by <strong>Arnav Sharma</strong>, an individual
-      (“we”, “us”). This policy explains what information Intent handles when you use the Windows app and this website,
-      and what we do with it.
-    </p>
-    <p>Questions or requests about your information: <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
-  </section>
-
   <section id="local" aria-labelledby="local-h">
-    <h2 id="local-h">What stays on your device</h2>
-    <p>
-      Intent is local-first. Your productivity content is stored in a database on your own computer and is not sent to
-      our servers. That includes:
-    </p>
-    <ul>
-      <li>monthly goals, daily goals and tasks, and your current task;</li>
-      <li>focus sessions, interruptions and how you returned after them;</li>
-      <li>reflections, weekly and monthly reviews, and progress statistics, which are calculated on your device;</li>
-      <li>your settings and your companion (Kero) preferences.</li>
-    </ul>
-    <p>
-      Intent does not record keystrokes, take screenshots, read your files, or log which windows or apps you use. To hide
-      the companion while a fullscreen app or presentation is in front, the app checks on your device whether the window in
-      front covers the screen. That check does not read window titles or app names, and its result is not stored or sent
-      anywhere.
-    </p>
-    <p>
-      Because this content never reaches us, we cannot see it, recover it or delete it for you. It stays under your
-      control, and uninstalling Intent or deleting its local data removes it from that device.
-    </p>
+    <h2 id="local-h">Your local data</h2>
+    <p>Your goals, tasks, focus sessions, interruptions, reflections, reviews, statistics and Kero settings are stored on your computer, not our servers. We cannot view, recover or delete this content for you. You control it by removing the app's local data.</p>
+    <p>Intent does not record keystrokes, take screenshots, read your files or log the apps you use. Its fullscreen check only decides whether to hide Kero; it does not read window titles or app names, or store or transmit the result.</p>
   </section>
 
   <section id="collect" aria-labelledby="collect-h">
-    <h2 id="collect-h">What we collect</h2>
-    <p>Our servers receive only what is needed to create your account and keep you signed in.</p>
-
-    <h3>Account information from Google</h3>
+    <h2 id="collect-h">Information we receive</h2>
     <ul>
-      <li>your Google account identifier (a stable ID Google assigns to your account);</li>
-      <li>your email address and whether Google has verified it;</li>
-      <li>your name as shown on your Google profile.</li>
+      <li><strong>Google account:</strong> your account identifier, name, email address and email verification status.</li>
+      <li><strong>Device:</strong> a random installation identifier, Windows computer name, Windows version and Intent version.</li>
+      <li><strong>Account activity:</strong> internal account ID, creation date, last sign-in and service use, signed-in devices, sign-out times and session records. Session tokens are stored as one-way hashes.</li>
+      <li><strong>API logs:</strong> IP address, request time, method, path, response status and duration. Logs exclude query strings, headers, and request and response bodies. IP addresses are also used briefly in memory to limit sign-in requests.</li>
     </ul>
-
-    <h3>Device information sent when you sign in</h3>
-    <ul>
-      <li>a random installation identifier created by the app;</li>
-      <li>your computer’s name (the Windows computer name);</li>
-      <li>your Windows version and the Intent app version.</li>
-    </ul>
-
-    <h3>Account and session records</h3>
-    <ul>
-      <li>an internal account ID, when your account was created, your last sign-in and when you last used the service;</li>
-      <li>the devices signed in to your account and when they were signed out;</li>
-      <li>sign-in session records. The tokens themselves are stored only as one-way hashes.</li>
-    </ul>
-
-    <h3>Technical request data</h3>
-    <p>
-      When the app talks to our API, our servers log basic request details: your IP address, the time, the request method
-      and path, the response status and how long it took. Query strings, request and response bodies, and request headers
-      are not written to these logs. Your IP address is also used briefly, in memory, to rate-limit sign-in requests.
-    </p>
   </section>
 
   <section id="google" aria-labelledby="google-h">
     <h2 id="google-h">Google sign-in</h2>
-    <p>
-      Intent uses Google sign-in to create and identify your account. When you choose “Sign in with Google”, the app opens
-      Google in your browser. You sign in with Google directly, and <strong>we never see or store your Google password</strong>.
-    </p>
-    <p>
-      Intent requests only the basic sign-in permissions: <code>openid</code>, <code>email</code> and <code>profile</code>.
-      From these we use your Google account identifier, email address, verification status and name, as listed above,
-      only to sign you in and to recognise your account on each of your devices. Intent does not request access to your
-      Gmail, Google Drive, Calendar, contacts or any other Google data. Intent does not request Google refresh tokens, and
-      the Google sign-in tokens returned during authentication are used for the sign-in flow and are not stored by Intent.
-      We do not use information from Google for advertising, and we do not sell it.
-    </p>
-    <p>
-      You can remove Intent’s access at any time from your Google Account’s <a href="https://myaccount.google.com/permissions" rel="noopener">third-party access settings</a>.
-      Google’s own handling
-      of your information is described in the <a href="https://policies.google.com/privacy" rel="noopener">Google Privacy Policy</a>.
-    </p>
-  </section>
-
-  <section id="analytics" aria-labelledby="analytics-h">
-    <h2 id="analytics-h">Product analytics</h2>
-    <p>
-      Intent does not currently send product analytics or usage telemetry. If we introduce product analytics in the
-      future, we will limit collection to an allowlisted set of usage events, obtain consent where required, and update
-      this Privacy Policy before collection begins.
-    </p>
+    <p>You sign in directly with Google in your browser. We never receive your Google password. Intent requests <code>openid</code>, <code>email</code> and <code>profile</code> permissions to identify your account across devices, not access to Gmail, Drive, Calendar or contacts.</p>
+    <p>We do not request Google refresh tokens or store Google's sign-in tokens after authentication. Google information is not sold or used for advertising.</p>
+    <p>You can revoke access in <a href="https://myaccount.google.com/permissions" rel="noopener">Google's third-party access settings</a>. See also <a href="https://policies.google.com/privacy" rel="noopener">Google's Privacy Policy</a>.</p>
   </section>
 
   <section id="use" aria-labelledby="use-h">
     <h2 id="use-h">How we use information</h2>
-    <ul>
-      <li>to sign you in, keep you signed in, and recognise your account across your devices;</li>
-      <li>to let a device sign out, and to end sessions that are no longer valid;</li>
-      <li>to protect the service: rate-limiting, detecting misuse, and investigating errors;</li>
-      <li>to operate, maintain and improve the reliability of the service.</li>
-    </ul>
-    <p>
-      We do not sell your personal information, use it for advertising, or share it with data brokers. We may disclose
-      information if we are required to by law.
-    </p>
+    <p>We use account and technical information to manage sign-in and sign-out, recognise your devices, end invalid sessions, prevent misuse, investigate errors and maintain service reliability.</p>
+    <p>We do not sell personal information, use it for advertising or share it with data brokers. We may disclose information when required by law.</p>
   </section>
 
   <section id="storage" aria-labelledby="storage-h">
-    <h2 id="storage-h">Where information is stored</h2>
-    <p>
-      The account information above is stored in a database on our server in Google Cloud’s Mumbai, India region
-      (<code>asia-south1</code>). Backups of that database are stored privately in Google Cloud Storage in the same region.
-      If you use Intent from outside India, your account information is transferred to and processed in India.
-    </p>
-    <p>
-      On your computer, Intent keeps your productivity content in its local database and stores your sign-in session in
-      Windows Credential Manager.
-    </p>
-  </section>
-
-  <section id="security" aria-labelledby="security-h">
-    <h2 id="security-h">Security</h2>
-    <ul>
-      <li>All traffic between the app and our API uses HTTPS.</li>
-      <li>The database is not reachable from the internet. Only the API on the same server can connect to it.</li>
-      <li>Administrative access to the server is restricted and does not allow direct SSH connections from the internet.</li>
-      <li>Sign-in uses Google’s OAuth flow with additional one-time checks. Session tokens are stored on our servers only as hashes.</li>
-      <li>Server secrets are kept on the server and are never included in the app.</li>
+    <h2 id="storage-h">Storage and service providers</h2>
+    <p>Account data and private backups are stored in Google Cloud's Mumbai, India region (<code>asia-south1</code>). If you use Intent outside India, this information is transferred to and processed in India. Your local sign-in session is stored in Windows Credential Manager.</p>
+    <ul id="services">
+      <li><strong>Google:</strong> account authentication, server hosting and backups.</li>
+      <li><strong>Hostinger:</strong> domain and DNS services for intentapp.app.</li>
+      <li><strong>Let's Encrypt:</strong> API HTTPS certificates; it does not receive account information.</li>
     </ul>
-    <p>
-      No system is perfectly secure, and we cannot guarantee absolute security. Your local data is protected by the
-      security of your own Windows account and device.
-    </p>
-  </section>
-
-  <section id="services" aria-labelledby="services-h">
-    <h2 id="services-h">Services we rely on</h2>
-    <ul>
-      <li><strong>Google</strong>: Google sign-in for authentication, and Google Cloud for hosting our server and storing backups.</li>
-      <li><strong>Let’s Encrypt</strong>: issues the HTTPS certificate for our API. It does not receive your account information.</li>
-      <li><strong>Hostinger</strong>: our domain and DNS provider, which resolves the <code>intentapp.app</code> addresses your app and browser look up.</li>
-    </ul>
-    <p>We do not use advertising networks or third-party analytics services.</p>
+    <h3 id="security">Security</h3>
+    <p>App-to-API traffic uses HTTPS. Database access is limited to the API on the same server, administrative access is restricted, and direct internet SSH access is disabled. Sign-in uses one-time checks and hashed session tokens. Server secrets are not included in the app.</p>
+    <p>No system guarantees absolute security. Local data also depends on the security of your Windows account and device.</p>
   </section>
 
   <section id="cookies" aria-labelledby="cookies-h">
-    <h2 id="cookies-h">Cookies and local storage</h2>
-    <p>
-      This website does not set cookies and does not use analytics or tracking scripts. Its fonts are served from this site,
-      not from a third party. The server that delivers the website may process standard request information, such as your IP
-      address, in order to serve pages.
-    </p>
-    <p>
-      The Windows app stores your content locally and keeps your sign-in session in Windows Credential Manager, as
-      described above. It does not use advertising identifiers.
-    </p>
+    <h2 id="cookies-h">Cookies and analytics</h2>
+    <p>This website does not set cookies or use tracking scripts. Fonts are served locally. The website server may process standard request information, including your IP address, to deliver pages. The app does not use advertising identifiers.</p>
+    <p id="analytics">Intent currently sends no product analytics or usage telemetry and uses no third-party analytics or advertising networks. Before introducing analytics, we will update this policy, limit collection to specified usage events and obtain consent where required.</p>
   </section>
 
   <section id="retention" aria-labelledby="retention-h">
-    <h2 id="retention-h">How long we keep information</h2>
+    <h2 id="retention-h">How long we keep data</h2>
     <ul>
-      <li><strong>Account information</strong> is kept while your account exists. You can ask us to delete it (see below).</li>
-      <li><strong>Sign-in sessions</strong> expire after 60 days without use. Expired session records may remain in the database until they are cleaned up.</li>
-      <li><strong>Web server access logs</strong>, which include IP addresses, are kept for 30 days.</li>
-      <li><strong>API service logs</strong> are kept on the server for a limited time and are rotated as they reach their size limit.</li>
-      <li>
-        <strong>Database backups</strong> are kept for up to about four months. Information deleted from the database
-        can remain in older backups until those backups expire.
-      </li>
+      <li><strong>Account information:</strong> while your account exists; deletion is available by email.</li>
+      <li><strong>Sessions:</strong> expire after 60 days without use. Expired records may remain until cleaned up.</li>
+      <li><strong>Web access logs:</strong> 30 days, including IP addresses.</li>
+      <li><strong>API logs:</strong> retained for a limited time and rotated at their size limit.</li>
+      <li><strong>Backups:</strong> up to about four months. Deleted information may remain in older backups until they expire.</li>
     </ul>
   </section>
 
   <section id="choices" aria-labelledby="choices-h">
-    <h2 id="choices-h">Your choices and requests</h2>
-    <ul>
-      <li><strong>Sign out</strong> in the app to end that device’s session.</li>
-      <li><strong>Remove Intent’s access</strong> to your Google account in your Google Account settings.</li>
-      <li><strong>Delete local data</strong> by uninstalling Intent or removing its data from your device.</li>
-      <li>
-        <strong>Access, correction or deletion</strong>: email <a href={`mailto:${CONTACT}`}>{CONTACT}</a> from the email
-        address on your account. Intent does not yet have an in-app account deletion feature, so deletion requests are
-        handled by email.
-      </li>
-    </ul>
-    <p>
-      Depending on where you live, you may have additional rights under applicable law. Contact us and we will respond to
-      your request.
-    </p>
+    <h2 id="choices-h">Your choices</h2>
+    <p>You can sign out in the app, revoke Google's access permission, or remove local data from your computer.</p>
+    <p>For access, correction or account deletion, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a> from your account email address. Account deletion is handled by email; an in-app deletion option is not yet available. Depending on your location, you may have additional rights under applicable law. Contact us to make a request.</p>
   </section>
 
   <section id="children" aria-labelledby="children-h">
     <h2 id="children-h">Children</h2>
-    <p>
-      Intent is intended for users aged 13 and older. Intent is not directed to children under 13, and we do not knowingly
-      collect personal information from children under 13. If you believe a child under 13 has created an account, contact
-      us and we will delete it. Additional age or consent requirements may apply where required by applicable law.
-    </p>
-  </section>
-
-  <section id="changes" aria-labelledby="changes-h">
-    <h2 id="changes-h">Changes to this policy</h2>
-    <p>
-      We will update this policy if what Intent collects or how we use it changes, and we will revise the effective date
-      above. If a change is significant, we will take reasonable steps to let you know, for example on this website or in
-      the app, before it takes effect.
-    </p>
+    <p>Intent is intended for ages 13 and older, subject to additional local age or consent requirements. We do not knowingly collect personal information from children under 13. Contact us if a child under 13 has created an account so we can delete it.</p>
   </section>
 
   <section id="contact" aria-labelledby="contact-h">
-    <h2 id="contact-h">Contact</h2>
-    <p>
-      Intent is operated by Arnav Sharma. For privacy questions or requests, email <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.
-    </p>
+    <h2 id="contact-h">Contact and updates</h2>
+    <p>For privacy questions or requests, contact Arnav Sharma at <a href={`mailto:${CONTACT}`}>{CONTACT}</a>.</p>
+    <p id="changes">We will update this policy and its effective date when our practices change. For significant changes, we will take reasonable steps to notify you through this website or the app before they take effect.</p>
   </section>
 </Legal>

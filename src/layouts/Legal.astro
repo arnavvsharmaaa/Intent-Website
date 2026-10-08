@@ -4,6 +4,8 @@
 import BaseLayout from './Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
+import { ArrowLeft, ArrowUpRight, ChevronDown } from 'lucide-astro';
+import '../styles/legal.css';
 
 interface Props {
   title: string;
@@ -25,28 +27,31 @@ const effectiveLabel = new Date(`${effective}T00:00:00Z`).toLocaleDateString('en
 
 <BaseLayout title={title} description={description}>
   <SiteHeader />
-  <main id="main" class="bg-canvas">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 md:pt-20 pb-20 md:pb-28">
-      <header class="max-w-3xl mb-10 md:mb-14">
-        <p class="eyebrow text-focus-soft mb-3">Legal</p>
-        <h1 class="text-display-lg font-heading font-extrabold text-white text-balance">{heading}</h1>
-        <p class="mt-4 text-sm font-mono text-fg-subtle">
+  <main id="main" class="legal-page">
+    <div class="legal-container">
+      <a class="legal-back" href="/"><ArrowLeft size={15}/> Back to Intent</a>
+      <nav class="legal-tabs" aria-label="Legal documents">
+        <a href="/privacy/" aria-current={Astro.url.pathname.startsWith('/privacy') ? 'page' : undefined}>Privacy Policy</a>
+        <a href="/terms/" aria-current={Astro.url.pathname.startsWith('/terms') ? 'page' : undefined}>Terms of Service</a>
+      </nav>
+      <header class="legal-heading">
+        <p class="legal-eyebrow">THE DETAILS THAT MATTER</p>
+        <h1>{heading}</h1>
+        <p class="legal-date">
           Effective <time datetime={effective}>{effectiveLabel}</time>
         </p>
-        <slot name="intro" />
+        <div class="legal-intro"><slot name="intro" /></div>
       </header>
 
-      <div class="lg:grid lg:grid-cols-12 lg:gap-12">
-        <nav class="hidden lg:block lg:col-span-3" aria-labelledby="legal-toc">
-          <div class="sticky top-24">
-            <p id="legal-toc" class="text-xs font-mono font-semibold text-fg tracking-wider uppercase mb-3">On this page</p>
-            <ol class="space-y-2 text-sm text-fg-muted">
-              {sections.map((s) => <li><a class="hover:text-focus-soft transition-colors" href={`#${s.id}`}>{s.label}</a></li>)}
-            </ol>
-          </div>
+      <details class="legal-mobile-toc"><summary>On this page <ChevronDown size={17}/></summary><nav aria-label="Sections">{sections.map(s => <a href={`#${s.id}`}>{s.label}</a>)}</nav></details>
+      <div class="legal-columns">
+        <nav class="legal-sidebar" aria-labelledby="legal-toc">
+          <p id="legal-toc">On this page</p>
+          <ol>{sections.map((s, i) => <li><a href={`#${s.id}`}><span>{String(i+1).padStart(2,'0')}</span>{s.label}</a></li>)}</ol>
+          <a class="legal-contact" href="#contact">Have a question?<ArrowUpRight size={15}/></a>
         </nav>
 
-        <article class="legal lg:col-span-9">
+        <article class="legal legal-body">
           <slot />
         </article>
       </div>
@@ -54,3 +59,6 @@ const effectiveLabel = new Date(`${effective}T00:00:00Z`).toLocaleDateString('en
   </main>
   <SiteFooter />
 </BaseLayout>
+<script>
+  document.querySelectorAll('.legal-mobile-toc a').forEach(a => a.addEventListener('click', () => document.querySelector('.legal-mobile-toc')?.removeAttribute('open')));
+</script>
