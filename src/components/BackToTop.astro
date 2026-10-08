@@ -1,0 +1,20 @@
+---
+import { ArrowUp } from 'lucide-astro';
+---
+<button class="back-to-top" type="button" aria-label="Back to top" title="Back to top" hidden><ArrowUp size={20}/></button>
+<style>
+  .back-to-top{position:fixed;right:24px;bottom:24px;z-index:40;width:46px;height:46px;border-radius:50%;display:grid;place-items:center;background:#b7e77a;color:#243322;border:1px solid #91b766;box-shadow:0 4px 20px #14201020;transition:transform 180ms ease,background 180ms ease}
+  .back-to-top[hidden]{display:none}.back-to-top:hover{transform:translateY(-3px);background:#c7ee9d}
+  @media(max-width:700px){.back-to-top{right:16px;bottom:max(16px,env(safe-area-inset-bottom))}}
+  @media(prefers-reduced-motion:reduce){.back-to-top{transition:none;transform:none}}
+</style>
+<script>
+  const button = document.querySelector<HTMLButtonElement>('.back-to-top');
+  const update = () => { if (button) button.hidden = window.scrollY < 350; };
+  window.addEventListener('scroll', update, { passive:true });
+  update();
+  button?.addEventListener('click', () => {
+    document.querySelector<HTMLElement>('.simple-header a')?.focus({preventScroll:true});
+    window.scrollTo({top:0,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth'});
+  });
+</script>

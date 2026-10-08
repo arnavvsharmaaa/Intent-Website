@@ -3,6 +3,7 @@ import '@fontsource-variable/inter';
 import '@fontsource-variable/plus-jakarta-sans';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import BackToTop from '../components/BackToTop.astro';
 // The two faces visible above the fold; preloading them avoids a late font swap on the hero.
 import jakartaLatin from '@fontsource-variable/plus-jakarta-sans/files/plus-jakarta-sans-latin-wght-normal.woff2?url';
 import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
@@ -86,5 +87,6 @@ const jsonLd = structuredData.length
   <body class="bg-canvas text-fg antialiased">
     <a href="#main" class="skip-link">Skip to content</a>
     <slot />
+    <BackToTop />
   </body>
 </html>

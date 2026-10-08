@@ -34,3 +34,4 @@ desktop.ini
 .cache/
 .lighthouseci/
 coverage/
+review-output/

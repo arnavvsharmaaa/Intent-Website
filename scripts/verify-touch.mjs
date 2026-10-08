@@ -1,0 +1,35 @@
+import { chromium } from '@playwright/test';
+import assert from 'node:assert/strict';
+const browser=await chromium.launch({channel:'msedge',headless:true});
+for(const width of [1440,390]){
+  const page=await browser.newPage({viewport:{width,height:900},reducedMotion:'reduce'});
+  await page.goto('http://127.0.0.1:4322/',{waitUntil:'networkidle'});
+  await page.waitForFunction(()=>getComputedStyle(document.querySelector('#scene-fallback')).display==='none');
+  const canvas=page.locator('#kero-world canvas');
+  const before=await canvas.screenshot();
+  const box=await canvas.boundingBox();
+  await page.mouse.click(box.x+box.width/2,box.y+box.height*0.65);
+  assert.equal(await page.locator('#kero-world').getAttribute('data-touched'),'true');
+  await page.waitForTimeout(100);
+  assert(!before.equals(await canvas.screenshot()),'Touch should change rendered color');
+  await page.waitForTimeout(1550);
+  assert.equal(await page.locator('#kero-world').getAttribute('data-touched'),'false');
+  await page.locator('#kero-world').focus();
+  await page.keyboard.press('Enter');
+  assert.equal(await page.locator('#kero-world').getAttribute('data-touched'),'true');
+  const top=page.getByRole('button',{name:'Back to top',exact:true});
+  assert(await top.isHidden());
+  await page.evaluate(()=>scrollTo(0,1000));
+  await top.waitFor({state:'visible'});
+  await top.click();
+  assert.equal(await page.evaluate(()=>scrollY),0);
+  await page.screenshot({path:`review-output/hero-soft-${width}.png`});
+  await page.goto('http://127.0.0.1:4322/privacy/',{waitUntil:'networkidle'});
+  await page.evaluate(()=>scrollTo(0,1200));
+  await top.waitFor({state:'visible'});
+  await top.click();
+  assert.equal(await page.evaluate(()=>scrollY),0);
+  console.log(`${width}px: touch color, keyboard interaction and homepage/privacy back-to-top passed`);
+  await page.close();
+}
+await browser.close();
