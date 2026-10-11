@@ -22,14 +22,13 @@ const env = (v: string | undefined) => (v && v.trim() ? v.trim() : null);
 
 /**
  * The current Windows release on the stable channel. Update every field together, copied from the
- * published release (the SHA-256 is the one in the build log that `verify-public` confirmed).
+ * published release.
  * The installer is not Authenticode-signed; only the in-app updater checks a Tauri updater signature.
  */
 export const RELEASE = {
   version: '0.1.1',
   installerName: 'Intent_0.1.1_x64-setup.exe',
   installerUrl: 'https://releases.intentapp.app/windows/stable/Intent_0.1.1_x64-setup.exe',
-  sha256: '6da4e0ba89bb6b9116fa8b9a4ca53f39d066e9b7ce0bb5af0a94d3665daef9ba',
   manifestUrl: 'https://releases.intentapp.app/windows/stable/latest.json',
 } as const;
 
