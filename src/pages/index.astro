@@ -704,17 +704,7 @@ const structuredData = [
         Download Intent for Windows
       </a>
 
-      <div class="mt-7 rounded-xl border border-hairline bg-canvas/60 px-4 py-4 text-left">
-        <div class="flex items-center justify-between gap-3">
-          <p class="text-xs font-mono uppercase tracking-[0.06em] text-fg-muted">SHA-256 checksum</p>
-          <button type="button" class="press rounded-md border border-hairline bg-surface-high px-2.5 py-1 text-xs font-mono font-medium text-focus-soft hover:border-focus/40" aria-label="Copy SHA-256 checksum" data-copy-checksum hidden>Copy</button>
-        </div>
-        <code id="release-sha256" class="mt-2 block break-all select-all font-mono text-[13px] leading-relaxed text-fg">{RELEASE.sha256}</code>
-        <p class="sr-only" aria-live="polite" data-copy-status></p>
-      </div>
-
-      <p class="mt-5 text-[13px] text-fg-muted leading-relaxed text-pretty">
-        To check your download, run <code class="font-mono text-fg">Get-FileHash .\{RELEASE.installerName}</code> in PowerShell and compare the hash.
+      <p class="mt-6 pt-5 border-t border-hairline text-[13px] text-fg-muted leading-relaxed text-pretty max-w-lg mx-auto">
         The installer isn't Authenticode-signed yet, so Windows may show an “unknown publisher” warning. In-app updates are verified with a Tauri updater signature
         (<a class="text-focus-soft underline underline-offset-2 hover:text-white" href={RELEASE.manifestUrl}>update manifest</a>).
       </p>
@@ -957,27 +947,6 @@ const structuredData = [
       if (e.isIntersecting) { const s = pad.dataset.state!; play(el.kero, s === 'focus' || s === 'distracted' ? 'focusing' : clipFor[s]); }
       else window.clearTimeout(players.get(el.kero)?.timer);
     }).observe(pad);
-  }
-
-  /* ── Copy the release checksum (the button only appears where the Clipboard API exists) ── */
-  const copyBtn = $<HTMLButtonElement>('[data-copy-checksum]');
-  const checksum = $('#release-sha256');
-  const copyStatus = $('[data-copy-status]');
-  if (copyBtn && checksum && copyStatus && navigator.clipboard) {
-    copyBtn.hidden = false;
-    let reset = 0;
-    copyBtn.addEventListener('click', async () => {
-      window.clearTimeout(reset);
-      try {
-        await navigator.clipboard.writeText(checksum.textContent!.trim());
-        copyBtn.textContent = 'Copied';
-        copyStatus.textContent = 'Checksum copied to the clipboard.';
-      } catch {
-        copyBtn.textContent = 'Copy failed';
-        copyStatus.textContent = 'Could not copy. Select the checksum and copy it instead.';
-      }
-      reset = window.setTimeout(() => { copyBtn.textContent = 'Copy'; copyStatus.textContent = ''; }, 2000);
-    });
   }
 </script>
 </BaseLayout>
