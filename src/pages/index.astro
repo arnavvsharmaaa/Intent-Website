@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/Base.astro';
 import SiteHeader from '../components/SiteHeader.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import SectionIntro from '../components/SectionIntro.astro';
-import { DOWNLOAD_URL, SITE } from '../config/site';
+import { DOWNLOAD_URL, RELEASE, SITE } from '../config/site';
 
 const downloadLabel = DOWNLOAD_URL ? 'Download for Windows' : 'Get Intent for Windows';
 const downloadHref = DOWNLOAD_URL ?? '#download';
@@ -692,22 +692,33 @@ const structuredData = [
       Plan the month, focus on one task, come back after distractions, and end each day knowing where things stand.
     </p>
 
-    {DOWNLOAD_URL ? (
-      <a class="press inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-focus hover:bg-focus-soft text-[#0c0e14] font-bold text-base tracking-tight shadow-focus-glow" href={DOWNLOAD_URL}>
+    <div class="mx-auto max-w-2xl rounded-2xl border border-focus/30 bg-surface-low/80 px-5 py-6 sm:px-8 sm:py-7 shadow-focus-glow">
+      <h3 class="flex items-center justify-center gap-2 font-heading font-bold text-lg text-white">
+        <span class="w-2 h-2 rounded-full bg-focus-soft" aria-hidden="true"></span>
+        Intent for Windows — v{RELEASE.version}
+      </h3>
+      <p class="mt-1 text-sm font-mono text-fg-muted">64-bit installer · {RELEASE.installerName}</p>
+
+      <a class="press mt-6 w-full sm:w-auto inline-flex items-center justify-center gap-3 px-8 py-4 rounded-xl bg-focus hover:bg-focus-soft text-[#0c0e14] font-bold text-base tracking-tight shadow-focus-glow" href={RELEASE.installerUrl}>
         <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M0 3.449L9.75 2.1v9.451H0m10.949-9.602L24 0v11.4H10.949M0 12.6h9.75v9.451L0 20.699M10.949 12.6H24V24l-12.949-1.801"></path></svg>
         Download Intent for Windows
       </a>
-    ) : (
-      <div class="mx-auto max-w-lg rounded-2xl border border-focus/30 bg-surface-low/80 px-6 py-6 shadow-focus-glow">
-        <p class="flex items-center justify-center gap-2 font-heading font-bold text-lg text-white">
-          <span class="w-2 h-2 rounded-full bg-recovery-soft motion-safe:animate-pulse" aria-hidden="true"></span>
-          The Windows installer is coming soon
-        </p>
-        <p class="mt-2 text-[15px] text-fg-muted leading-relaxed">
-          Intent v{SITE.version} is in active development. The signed installer will be published right here when it's ready.
-        </p>
+
+      <div class="mt-7 rounded-xl border border-hairline bg-canvas/60 px-4 py-4 text-left">
+        <div class="flex items-center justify-between gap-3">
+          <p class="text-xs font-mono uppercase tracking-[0.06em] text-fg-muted">SHA-256 checksum</p>
+          <button type="button" class="press rounded-md border border-hairline bg-surface-high px-2.5 py-1 text-xs font-mono font-medium text-focus-soft hover:border-focus/40" aria-label="Copy SHA-256 checksum" data-copy-checksum hidden>Copy</button>
+        </div>
+        <code id="release-sha256" class="mt-2 block break-all select-all font-mono text-[13px] leading-relaxed text-fg">{RELEASE.sha256}</code>
+        <p class="sr-only" aria-live="polite" data-copy-status></p>
       </div>
-    )}
+
+      <p class="mt-5 text-[13px] text-fg-muted leading-relaxed text-pretty">
+        To check your download, run <code class="font-mono text-fg">Get-FileHash .\{RELEASE.installerName}</code> in PowerShell and compare the hash.
+        The installer isn't Authenticode-signed yet, so Windows may show an “unknown publisher” warning. In-app updates are verified with a Tauri updater signature
+        (<a class="text-focus-soft underline underline-offset-2 hover:text-white" href={RELEASE.manifestUrl}>update manifest</a>).
+      </p>
+    </div>
 
     <ul class="mt-10 flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-sm font-mono text-fg-muted">
       <li class="flex items-center gap-2"><svg class="w-4 h-4 text-focus-soft" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"></path></svg>Windows 10 (22H2+) &amp; 11</li>
@@ -946,6 +957,27 @@ const structuredData = [
       if (e.isIntersecting) { const s = pad.dataset.state!; play(el.kero, s === 'focus' || s === 'distracted' ? 'focusing' : clipFor[s]); }
       else window.clearTimeout(players.get(el.kero)?.timer);
     }).observe(pad);
+  }
+
+  /* ── Copy the release checksum (the button only appears where the Clipboard API exists) ── */
+  const copyBtn = $<HTMLButtonElement>('[data-copy-checksum]');
+  const checksum = $('#release-sha256');
+  const copyStatus = $('[data-copy-status]');
+  if (copyBtn && checksum && copyStatus && navigator.clipboard) {
+    copyBtn.hidden = false;
+    let reset = 0;
+    copyBtn.addEventListener('click', async () => {
+      window.clearTimeout(reset);
+      try {
+        await navigator.clipboard.writeText(checksum.textContent!.trim());
+        copyBtn.textContent = 'Copied';
+        copyStatus.textContent = 'Checksum copied to the clipboard.';
+      } catch {
+        copyBtn.textContent = 'Copy failed';
+        copyStatus.textContent = 'Could not copy. Select the checksum and copy it instead.';
+      }
+      reset = window.setTimeout(() => { copyBtn.textContent = 'Copy'; copyStatus.textContent = ''; }, 2000);
+    });
   }
 </script>
 </BaseLayout>
